@@ -77,71 +77,30 @@ public class OrganizationDaoDbTest {
 
     @Test
     public void testGetAndAddOrganization() {
-        Superpower superpower = new Superpower();
-        superpower.setName("Webbing");
-        superpower.setDescription("The ability to shoot webs whenever in need");
-        superpower = superpowerDao.addSuperpower(superpower);
-
-        Superhero superhero = new Superhero();
-        superhero.setName("Spiderman");
-        superhero.setDescription("An ordinary young man in his 20s living in the city");
-        superhero.setSuperpower(superpower);
-        
         Organization organization = new Organization();
         organization.setName("Avengers");
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-        List<Superhero> superheroes = new ArrayList<>();
-        superheroes.add(superhero);
-        organization.setSuperheroes(superheroes);
         organization = organizationDao.addOrganization(organization);
-        
         Organization fromDao = organizationDao.getOrganizationById(organization.getId());
         assertEquals(organization, fromDao);
-
     }
     
     @Test
     public void testGetAllOrganizations() {
-        Superpower superpower = new Superpower();
-        superpower.setName("Webbing");
-        superpower.setDescription("The ability to shoot webs whenever in need");
-        superpower = superpowerDao.addSuperpower(superpower);
-
-        Superhero superhero = new Superhero();
-        superhero.setName("Spiderman");
-        superhero.setDescription("An ordinary young man in his 20s living in the city");
-        superhero.setSuperpower(superpower);
-        
         Organization organization = new Organization();
         organization.setName("Avengers");
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-        List<Superhero> superheroes = new ArrayList<>();
-        superheroes.add(superhero);
-        organization.setSuperheroes(superheroes);
         organization = organizationDao.addOrganization(organization);
-        
-        Superpower superpower2 = new Superpower();
-        superpower2.setName("Superstrength");
-        superpower2.setDescription("The unhuman ability to become very powerful and strong");
-        superpower2 = superpowerDao.addSuperpower(superpower2);
-
-        Superhero superhero2 = new Superhero();
-        superhero2.setName("Hulk");
-        superhero2.setDescription("A doctor who got exposed to radiation and became greenish and huge");
-        superhero2.setSuperpower(superpower2);
         
         Organization organization2 = new Organization();
         organization2.setName("Warner Bros");
         organization2.setDescription("An entertainment conglomerate");
         organization2.setAddress("New York City, New York, United States, 10002");
         organization2.setContactNumber("8189546777");
-        List<Superhero> superheroes2 = new ArrayList<>();
-        superheroes2.add(superhero2);
-        organization2.setSuperheroes(superheroes2);
         organization2 = organizationDao.addOrganization(organization2);
         
         List<Organization> organizations = organizationDao.getAllOrganizations();
@@ -152,24 +111,11 @@ public class OrganizationDaoDbTest {
     
     @Test
     public void testUpdateOrganization() {
-        Superpower superpower = new Superpower();
-        superpower.setName("Webbing");
-        superpower.setDescription("The ability to shoot webs whenever in need");
-        superpower = superpowerDao.addSuperpower(superpower);
-
-        Superhero superhero = new Superhero();
-        superhero.setName("Spiderman");
-        superhero.setDescription("An ordinary young man in his 20s living in the city");
-        superhero.setSuperpower(superpower);
-        
         Organization organization = new Organization();
         organization.setName("Avengers");
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-        List<Superhero> superheroes = new ArrayList<>();
-        superheroes.add(superhero);
-        organization.setSuperheroes(superheroes);
         organization = organizationDao.addOrganization(organization);
         
         Organization fromDao = organizationDao.getOrganizationById(organization.getId());
@@ -185,24 +131,11 @@ public class OrganizationDaoDbTest {
     
     @Test
     public void testDeleteOrganizationById() {
-        Superpower superpower = new Superpower();
-        superpower.setName("Webbing");
-        superpower.setDescription("The ability to shoot webs whenever in need");
-        superpower = superpowerDao.addSuperpower(superpower);
-
-        Superhero superhero = new Superhero();
-        superhero.setName("Spiderman");
-        superhero.setDescription("An ordinary young man in his 20s living in the city");
-        superhero.setSuperpower(superpower);
-        
         Organization organization = new Organization();
         organization.setName("Avengers");
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-        List<Superhero> superheroes = new ArrayList<>();
-        superheroes.add(superhero);
-        organization.setSuperheroes(superheroes);
         organization = organizationDao.addOrganization(organization);
         
         Organization fromDao = organizationDao.getOrganizationById(organization.getId());
@@ -225,13 +158,15 @@ public class OrganizationDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
+        organization = organizationDao.addOrganization(organization);
         
         Organization organization2 = new Organization();
         organization2.setName("Warner Bros");
         organization2.setDescription("An entertainment conglomerate");
         organization2.setAddress("New York City, New York, United States, 10002");
         organization2.setContactNumber("8189546777");
-        
+        organization2 = organizationDao.addOrganization(organization2);
+
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");

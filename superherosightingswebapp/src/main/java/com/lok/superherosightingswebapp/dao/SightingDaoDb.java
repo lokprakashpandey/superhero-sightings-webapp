@@ -7,7 +7,6 @@
 package com.lok.superherosightingswebapp.dao;
 
 import com.lok.superherosightingswebapp.dao.LocationDaoDb.LocationMapper;
-import com.lok.superherosightingswebapp.dao.OrganizationDaoDb.OrganizationMapper;
 import com.lok.superherosightingswebapp.dao.SuperheroDaoDb.SuperheroMapper;
 import com.lok.superherosightingswebapp.dao.SuperpowerDaoDb.SuperpowerMapper;
 import com.lok.superherosightingswebapp.dto.Location;
@@ -62,17 +61,18 @@ public class SightingDaoDb implements SightingDao {
         return superhero;
     }
 
-    private Superpower getSuperpowerForSuperhero(int id) {
+    private Superpower getSuperpowerForSuperhero(int superheroId) {
         final String SELECT_SUPERPOWER_FOR_SUPERHERO = "SELECT sp.* FROM superpower sp "
                 + "JOIN superhero sh ON sp.id = sh.superpowerId WHERE sh.id = ?";
-        return jdbc.queryForObject(SELECT_SUPERPOWER_FOR_SUPERHERO, new SuperpowerMapper(), id);
+        return jdbc.queryForObject(SELECT_SUPERPOWER_FOR_SUPERHERO, new SuperpowerMapper(), superheroId);
     }
 
-    private List<Organization> getOrganizationsForSuperhero(int id) {
+    private List<Organization> getOrganizationsForSuperhero(int superheroId) {
         final String SELECT_ORGANIZATIONS_FOR_SUPERHERO = "SELECT o.* FROM organization o "
                 + "JOIN superhero_organization so ON o.id = so.organizationId "
-                + "WHERE so.superheroId = ?";
-        return jdbc.query(SELECT_ORGANIZATIONS_FOR_SUPERHERO, new OrganizationMapper(), id);
+                + "JOIN superhero s ON s.id = so.superheroId WHERE s.id = ?";
+        return jdbc.query(SELECT_ORGANIZATIONS_FOR_SUPERHERO,
+                new OrganizationDaoDb.OrganizationMapper(), superheroId);
     }
     
     @Override
@@ -141,5 +141,4 @@ public class SightingDaoDb implements SightingDao {
         associateLocationAndSuperhero(sightings);
         return sightings;
     }
-
 }

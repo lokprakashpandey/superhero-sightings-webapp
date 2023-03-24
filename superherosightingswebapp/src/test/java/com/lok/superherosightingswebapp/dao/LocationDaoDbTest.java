@@ -155,17 +155,17 @@ public class LocationDaoDbTest {
         superpower.setDescription("The ability to shoot webs whenever in need");
         superpower = superpowerDao.addSuperpower(superpower);
         
-        Superhero superhero = new Superhero();
-        superhero.setName("Spiderman");
-        superhero.setDescription("An ordinary young man in his 20s living in the city");
-        superhero.setSuperpower(superpower);
-        
         Organization organization = new Organization();
         organization.setName("Avengers");
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
+        organization = organizationDao.addOrganization(organization);
         
+        Superhero superhero = new Superhero();
+        superhero.setName("Spiderman");
+        superhero.setDescription("An ordinary young man in his 20s living in the city");
+        superhero.setSuperpower(superpower);
         List<Organization> organizations = new ArrayList<>();
         organizations.add(organization);
         superhero.setOrganizations(organizations);
@@ -215,6 +215,7 @@ public class LocationDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
+        organization = organizationDao.addOrganization(organization);
         
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
@@ -252,6 +253,7 @@ public class LocationDaoDbTest {
         organization2.setDescription("An entertainment conglomerate");
         organization2.setAddress("New York City, New York, United States, 10002");
         organization2.setContactNumber("8189546777");
+        organization2 = organizationDao.addOrganization(organization2);
         
         Superhero superhero2 = new Superhero();
         superhero2.setName("Hulk");

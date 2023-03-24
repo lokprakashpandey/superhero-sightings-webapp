@@ -102,7 +102,6 @@ public class LocationDaoDb implements LocationDao {
             location.setAddress(rs.getString("address"));
             location.setLatitude(rs.getBigDecimal("latitude"));
             location.setLongitude(rs.getBigDecimal("longitude"));
-
             return location;
         }
     }

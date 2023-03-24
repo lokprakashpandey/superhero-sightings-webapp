@@ -89,6 +89,7 @@ public class SuperheroDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
+        organization = organizationDao.addOrganization(organization);
 
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
@@ -115,6 +116,7 @@ public class SuperheroDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
+        organization = organizationDao.addOrganization(organization);
 
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
@@ -135,6 +137,7 @@ public class SuperheroDaoDbTest {
         organization2.setDescription("An entertainment conglomerate");
         organization2.setAddress("New York City, New York, United States, 10002");
         organization2.setContactNumber("8189546777");
+        organization2 = organizationDao.addOrganization(organization2);
 
         Superhero superhero2 = new Superhero();
         superhero2.setName("Hulk");
@@ -164,7 +167,8 @@ public class SuperheroDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -199,7 +203,8 @@ public class SuperheroDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -245,7 +250,8 @@ public class SuperheroDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -265,7 +271,8 @@ public class SuperheroDaoDbTest {
         organization2.setDescription("An entertainment conglomerate");
         organization2.setAddress("New York City, New York, United States, 10002");
         organization2.setContactNumber("8189546777");
-
+        organization2 = organizationDao.addOrganization(organization2);
+        
         Superhero superhero2 = new Superhero();
         superhero2.setName("Hulk");
         superhero2.setDescription("A doctor who got exposed to radiation and became greenish and huge");
@@ -291,7 +298,7 @@ public class SuperheroDaoDbTest {
 
         Sighting sighting2 = new Sighting();
         sighting2.setDate(LocalDate.now());
-        sighting2.setLocation(location);
+        sighting2.setLocation(location); //same location
         sighting2.setSuperhero(superhero2);
         sightingDao.addSighting(sighting2);
 
@@ -310,6 +317,48 @@ public class SuperheroDaoDbTest {
 
         superheroes = superheroDao.getSuperheroesForLocation(location2);
         assertEquals(0, superheroes.size());
+    }
+    
+    //Case: Two Superheroes in an Organization
+    @Test
+    public void testGetSuperheroesForOrganization() {
+        Superpower superpower = new Superpower();
+        superpower.setName("Webbing");
+        superpower.setDescription("The ability to shoot webs whenever in need");
+        superpower = superpowerDao.addSuperpower(superpower);
+
+        Superpower superpower2 = new Superpower();
+        superpower2.setName("Superstrength");
+        superpower2.setDescription("The unhuman ability to become very powerful and strong");
+        superpower2 = superpowerDao.addSuperpower(superpower2);
+
+        Organization organization = new Organization();
+        organization.setName("Avengers");
+        organization.setDescription("An entertainment organization dealing with fictional superheroes");
+        organization.setAddress("New York City, New York, United States, 10001");
+        organization.setContactNumber("2125764000");
+        organization = organizationDao.addOrganization(organization);
+        
+        Superhero superhero = new Superhero();
+        superhero.setName("Spiderman");
+        superhero.setDescription("An ordinary young man in his 20s living in the city");
+        superhero.setSuperpower(superpower);
+        List<Organization> organizations = new ArrayList<>();
+        organizations.add(organization);
+        superhero.setOrganizations(organizations);
+        superhero = superheroDao.addSuperhero(superhero);
+        
+        Superhero superhero2 = new Superhero();
+        superhero2.setName("Hulk");
+        superhero2.setDescription("A doctor who got exposed to radiation and became greenish and huge");
+        superhero2.setSuperpower(superpower2);
+        superhero2.setOrganizations(organizations);
+        superhero2 = superheroDao.addSuperhero(superhero2);
+        
+        List<Superhero> fromDao = superheroDao.getSuperheroesForOrganization(organization);
+        assertEquals(2, fromDao.size());
+        assertTrue(fromDao.contains(superhero));
+        assertTrue(fromDao.contains(superhero2));
     }
 
 }

@@ -89,7 +89,8 @@ public class SightingDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -129,7 +130,8 @@ public class SightingDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -157,7 +159,8 @@ public class SightingDaoDbTest {
         organization2.setDescription("An entertainment conglomerate");
         organization2.setAddress("New York City, New York, United States, 10002");
         organization2.setContactNumber("8189546777");
-
+        organization2 = organizationDao.addOrganization(organization2);
+        
         Superhero superhero2 = new Superhero();
         superhero2.setName("Hulk");
         superhero2.setDescription("A doctor who got exposed to radiation and became greenish and huge");
@@ -205,7 +208,8 @@ public class SightingDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -252,7 +256,8 @@ public class SightingDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -298,7 +303,8 @@ public class SightingDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
-
+        organization = organizationDao.addOrganization(organization);
+        
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");
         superhero.setDescription("An ordinary young man in his 20s living in the city");
@@ -326,7 +332,8 @@ public class SightingDaoDbTest {
         organization2.setDescription("An entertainment conglomerate");
         organization2.setAddress("New York City, New York, United States, 10002");
         organization2.setContactNumber("8189546777");
-
+        organization2 = organizationDao.addOrganization(organization2);
+        
         Superhero superhero2 = new Superhero();
         superhero2.setName("Hulk");
         superhero2.setDescription("A doctor who got exposed to radiation and became greenish and huge");

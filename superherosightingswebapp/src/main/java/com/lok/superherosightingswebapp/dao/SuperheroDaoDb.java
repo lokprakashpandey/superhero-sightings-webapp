@@ -60,11 +60,11 @@ public class SuperheroDaoDb implements SuperheroDao {
     public List<Superhero> getAllSuperheroes() {
         final String GET_ALL_SUPERHEROES = "SELECT * FROM superhero";
         List<Superhero> superheroes = jdbc.query(GET_ALL_SUPERHEROES, new SuperheroMapper());
-        associateSuperpowerAndOrganizations(superheroes);
+        associateSuperpowersAndOrganizations(superheroes);
         return superheroes;
     }
 
-    private void associateSuperpowerAndOrganizations(List<Superhero> superheroes) {
+    private void associateSuperpowersAndOrganizations(List<Superhero> superheroes) {
         for (Superhero superhero : superheroes) {
             superhero.setSuperpower(getSuperpowerForSuperhero(superhero.getId()));
             superhero.setOrganizations(getOrganizationsForSuperhero(superhero.getId()));
@@ -83,24 +83,10 @@ public class SuperheroDaoDb implements SuperheroDao {
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         superhero.setId(newId);
-        insertOrganizations(superhero);
         insertSuperheroOrganization(superhero);
         return superhero;
     }
 
-    private void insertOrganizations(Superhero superhero) {
-        final String INSERT_ORGANIZATIONS = "INSERT INTO "
-                + "organization(name, description, address, contactNumber) VALUES(?,?,?,?)";
-        for(Organization organization: superhero.getOrganizations()) {
-            jdbc.update(INSERT_ORGANIZATIONS,
-                    organization.getName(),
-                    organization.getDescription(),
-                    organization.getAddress(),
-                    organization.getContactNumber());
-            organization.setId(jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class));
-        }
-    }
-    
     private void insertSuperheroOrganization(Superhero superhero) {
         final String INSERT_SUPERHERO_ORGANIZATION = "INSERT INTO "
                 + "superhero_organization(superheroId, organizationId) VALUES(?,?)";
@@ -143,13 +129,14 @@ public class SuperheroDaoDb implements SuperheroDao {
         jdbc.update(DELETE_SUPERHERO, id);
     }
 
+
     @Override
     public List<Superhero> getSuperheroesForOrganization(Organization organization) {
         final String SELECT_SUPERHEROES_FOR_ORGANIZATION = "SELECT s.* FROM superhero s "
                 + "JOIN superhero_organization so ON s.id = so.superheroId "
                 + "JOIN organization o ON o.id = so.organizationId WHERE o.id = ?";
         List<Superhero> superheroes = jdbc.query(SELECT_SUPERHEROES_FOR_ORGANIZATION, new SuperheroMapper(), organization.getId());
-        associateSuperpowerAndOrganizations(superheroes);
+        associateSuperpowersAndOrganizations(superheroes);
         return superheroes;
     }
 
@@ -159,7 +146,7 @@ public class SuperheroDaoDb implements SuperheroDao {
                 + "sighting si ON si.superheroId = su.Id WHERE si.locationId = ?";
         List<Superhero> superheroes = jdbc.query(SELECT_SUPERHEROES_FOR_LOCATION,
                 new SuperheroMapper(), location.getId());
-        associateSuperpowerAndOrganizations(superheroes);
+        associateSuperpowersAndOrganizations(superheroes);
         return superheroes;
     }
 

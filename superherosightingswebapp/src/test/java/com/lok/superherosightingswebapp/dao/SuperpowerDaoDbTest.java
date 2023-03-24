@@ -148,6 +148,7 @@ public class SuperpowerDaoDbTest {
         organization.setDescription("An entertainment organization dealing with fictional superheroes");
         organization.setAddress("New York City, New York, United States, 10001");
         organization.setContactNumber("2125764000");
+        organization = organizationDao.addOrganization(organization);
         
         Superhero superhero = new Superhero();
         superhero.setName("Spiderman");

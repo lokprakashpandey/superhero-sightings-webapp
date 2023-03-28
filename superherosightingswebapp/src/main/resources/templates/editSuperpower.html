@@ -39,21 +39,22 @@
             <!-- Superpowers Form -->
             <div class="row m-4 border border-dark">
                 <div class="col-3 text-center m-3">
-                    <span class="h3">Add Superpower</span>
+                    <span class="h3">Edit Superpower</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addSuperpower" method="POST">
+                    <form action="editSuperpower" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
                             <div class="col-9">
                                 <input type="text" name="name" 
                                        id="name" class="form-control" 
-                                       th:value="${superpower!=null}?${superpower.name}:''"/>
+                                       th:value="${superpower.name}"/>
 
-                                <div th:if="${nameError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${nameError.getDefaultMessage()}"></p>
+                                <div th:if="${#fields.hasErrors('superpower.name')}">
+                                    <p th:each="error : ${#fields.errors('superpower.name')}" 
+                                       class="alert alert-danger" th:text="${error}">
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -63,44 +64,20 @@
                             <div class="col-9">
                                 <input type="text" name="description" 
                                        id="description" class="form-control"
-                                       th:value="${superpower!=null}?${superpower.description}:''"/>
-                                <div th:if="${descriptionError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${descriptionError.getDefaultMessage()}"></p>
+                                       th:value="${superpower.description}"/>
+                                <div th:if="${#fields.hasErrors('superpower.description')}">
+                                    <p th:each="error : ${#fields.errors('superpower.description')}" 
+                                       class="alert alert-danger" th:text="${error}">
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Superpower</button>
+                        <input type="hidden" name="id" th:value="${superpower.id}"/>
+                        <button type="submit" class="btn btn-primary">Update Superpower</button>
                     </form>
                 </div>
             </div>
 
-            <!-- Superpowers Table -->
-            <div class="row m-4 border border-dark">
-                <div class="col text-center m-3">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="superpower : ${superpowers}">
-                                <td th:text="${superpower.id}">Superpower ID</td>
-                                <td th:text="${superpower.name}">Superpower Name</td>
-                                <td th:text="${superpower.description}">Superpower Description</td>
-                                <td><a href="#" th:href="@{/editSuperpower(id=${superpower.id})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteSuperpower(id=${superpower.id})}">Delete</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> 
         <!-- End main body -->
 
         <!-- Optional JavaScript -->
@@ -110,3 +87,4 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>
 </html>
+

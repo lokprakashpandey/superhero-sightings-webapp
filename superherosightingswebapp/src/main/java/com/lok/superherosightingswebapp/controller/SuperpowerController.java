@@ -7,20 +7,14 @@
 
 package com.lok.superherosightingswebapp.controller;
 
-import com.lok.superherosightingswebapp.dao.LocationDao;
-import com.lok.superherosightingswebapp.dao.OrganizationDao;
-import com.lok.superherosightingswebapp.dao.SightingDao;
-import com.lok.superherosightingswebapp.dao.SuperheroDao;
-import com.lok.superherosightingswebapp.dao.SuperpowerDao;
 import com.lok.superherosightingswebapp.dto.Superpower;
-import java.util.List;
+import com.lok.superherosightingswebapp.service.SuperpowerService;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -28,24 +22,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SuperpowerController {
 
     @Autowired
-    OrganizationDao organizationDao;
-
-    @Autowired
-    SightingDao sightingDao;
-
-    @Autowired
-    SuperheroDao superheroDao;
-
-    @Autowired
-    LocationDao locationDao;
-
-    @Autowired
-    SuperpowerDao superpowerDao;
+    SuperpowerService superpowerService;
 
     @GetMapping("superpowers")
     public String displaySuperpowers(Model model) {
-        List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
-        model.addAttribute("superpowers", superpowers);
+        model.addAttribute("superpowers", superpowerService.getAllSuperpowers());
         return "superpowers";
     }
     
@@ -55,44 +36,39 @@ public class SuperpowerController {
             //Set model to retrive data entered
             model.addAttribute("superpower",superpower);
             //Catch error for display
-            FieldError nameError = result.getFieldError("name");
-            model.addAttribute("nameError", nameError);
-            FieldError descriptionError = result.getFieldError("description");
-            model.addAttribute("descriptionError", descriptionError);
+            model.addAttribute("nameError", result.getFieldError("name"));
+            model.addAttribute("descriptionError", result.getFieldError("description"));
             //Set superpowers list also to display, otherwise nothing will be displayed in the table
-            List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
-            model.addAttribute("superpowers", superpowers);//This is superpowers list
-            return "superpowers"; // This is view
+            model.addAttribute("superpowers", superpowerService.getAllSuperpowers());//This is superpowers list
+            return "superpowers"; // This is view which will display errors and list both
         }
         else {
-            superpowerDao.addSuperpower(superpower);
+            superpowerService.addSuperpower(superpower);
             return "redirect:/superpowers";
         }
     }
     
     @GetMapping("editSuperpower")
-    public String editTeacher(HttpServletRequest request, Model model) {
+    public String editSuperpower(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
-        Superpower superpower = superpowerDao.getSuperpowerById(id);
-        model.addAttribute("superpower", superpower);
+        model.addAttribute("superpower", superpowerService.getSuperpowerById(id));
         return "editSuperpower";
     }
     
     @PostMapping("editSuperpower")
-    public String performEditCourse(@Valid Superpower superpower, BindingResult result, Model model) {
-                
+    public String performEditSuperpower(@Valid Superpower superpower, BindingResult result, Model model) {
         if(result.hasErrors()) {
             model.addAttribute("superpower", superpower);
             return "editSuperpower";
         }
-        superpowerDao.updateSuperpower(superpower);
+        superpowerService.updateSuperpower(superpower);
         return "redirect:/superpowers";
     }
     
     @GetMapping("deleteSuperpower")
     public String deleteSuperpower(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        superpowerDao.deleteSuperpowerById(id);
+        superpowerService.deleteSuperpowerById(id);
         return "redirect:/superpowers";
     }
 }

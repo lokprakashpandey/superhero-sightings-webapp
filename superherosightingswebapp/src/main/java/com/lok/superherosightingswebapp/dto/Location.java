@@ -8,14 +8,33 @@ package com.lok.superherosightingswebapp.dto;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Location {
 
     private int id;
+    
+    @NotBlank(message = "Name must not be empty")
+    @Size(max = 50, message = "Name must be less than 50 characters")
     private String name;
+    
+    @NotBlank(message = "Description must not be empty")
+    @Size(max = 255, message = "Description must be less than 255 characters")
     private String description;
+    
+    @NotBlank(message = "Address must not be empty")
+    @Size(max = 100, message = "Address must be less than 100 characters")
     private String address;
+    
+    @NotNull(message = "Latitude cannot be null")
+    @Digits(integer=6, fraction=4, message = "Latitude must have 6 digits with 4 digits after decimal point")
     private BigDecimal latitude;
+    
+    @NotNull(message = "Longitude cannot be null")
+    @Digits(integer=7, fraction=4, message = "Longitude must have 7 digits with 4 digits after decimal point")
     private BigDecimal longitude;
 
     public int getId() {

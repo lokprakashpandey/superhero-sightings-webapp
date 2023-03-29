@@ -6,19 +6,29 @@
  */
 package com.lok.superherosightingswebapp.dto;
 
-import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class Organization {
 
     private int id;
+    
+    @NotBlank(message = "Name must not be empty")
+    @Size(max = 50, message = "Name must be less than 50 characters")
     private String name;
+    
+    @NotBlank(message = "Description must not be empty")
+    @Size(max = 255, message = "Description must be less than 255 characters")
     private String description;
+    
+    @NotBlank(message = "Address must not be empty")
+    @Size(max = 100, message = "Address must be less than 100 characters")
     private String address;
+    
+    @NotBlank(message = "Contact No. must not be empty")
+    @Size(min = 10, max = 10, message = "Contact No. must be exactly 10 characters")
     private String contactNumber;
-
-    //Since there is a m-to-m relationship between the entities superhero and organization
-    private List<Superhero> superheroes;
 
     public int getId() {
         return id;
@@ -60,23 +70,14 @@ public class Organization {
         this.contactNumber = contactNumber;
     }
 
-    public List<Superhero> getSuperheroes() {
-        return superheroes;
-    }
-
-    public void setSuperheroes(List<Superhero> superheroes) {
-        this.superheroes = superheroes;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + this.id;
-        hash = 43 * hash + Objects.hashCode(this.name);
-        hash = 43 * hash + Objects.hashCode(this.description);
-        hash = 43 * hash + Objects.hashCode(this.address);
-        hash = 43 * hash + Objects.hashCode(this.contactNumber);
-        hash = 43 * hash + Objects.hashCode(this.superheroes);
+        hash = 67 * hash + this.id;
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.description);
+        hash = 67 * hash + Objects.hashCode(this.address);
+        hash = 67 * hash + Objects.hashCode(this.contactNumber);
         return hash;
     }
 
@@ -104,10 +105,7 @@ public class Organization {
         if (!Objects.equals(this.address, other.address)) {
             return false;
         }
-        if (!Objects.equals(this.contactNumber, other.contactNumber)) {
-            return false;
-        }
-        return Objects.equals(this.superheroes, other.superheroes);
+        return Objects.equals(this.contactNumber, other.contactNumber);
     }
 
 }

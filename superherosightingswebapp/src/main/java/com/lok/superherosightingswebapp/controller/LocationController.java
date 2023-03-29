@@ -41,7 +41,7 @@ public class LocationController {
             model.addAttribute("addressError", result.getFieldError("address"));
             model.addAttribute("latitudeError", result.getFieldError("latitude"));
             model.addAttribute("longitudeError", result.getFieldError("longitude"));
-            //Set superpowers list also to display, otherwise nothing will be displayed in the table
+            //Set locations list also to display, otherwise nothing will be displayed in the table
             model.addAttribute("locations", locationService.getAllLocations());
             return "locations"; // This is view which will display errors and list both
         }

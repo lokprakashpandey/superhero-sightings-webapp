@@ -6,11 +6,8 @@
  */
 package com.lok.superherosightingswebapp.dao;
 
-import com.lok.superherosightingswebapp.dao.SuperheroDaoDb.SuperheroMapper;
-import com.lok.superherosightingswebapp.dao.SuperpowerDaoDb.SuperpowerMapper;
 import com.lok.superherosightingswebapp.dto.Organization;
 import com.lok.superherosightingswebapp.dto.Superhero;
-import com.lok.superherosightingswebapp.dto.Superpower;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;

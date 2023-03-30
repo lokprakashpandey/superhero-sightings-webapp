@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Sighting {
 
@@ -17,6 +18,7 @@ public class Sighting {
     
     @NotNull(message = "Date cannot be null")
     @PastOrPresent(message = "Date cannot be in the future")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     
     private Superhero superhero;

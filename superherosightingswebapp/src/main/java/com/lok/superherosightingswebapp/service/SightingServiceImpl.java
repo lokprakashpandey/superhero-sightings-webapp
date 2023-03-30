@@ -49,5 +49,10 @@ public class SightingServiceImpl implements SightingService {
     public List<Sighting> getSightingsForParticularDate(LocalDate date) {
         return sightingDao.getSightingsForParticularDate(date);
     }
+
+    @Override
+    public List<Sighting> getLatestTenSightings() {
+        return sightingDao.getLatestTenSightings();
+    }
   
 }

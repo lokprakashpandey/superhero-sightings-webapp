@@ -30,4 +30,6 @@ public interface SightingDao {
      * Gets all sightings for a particular date
      */
     List<Sighting> getSightingsForParticularDate(LocalDate date);
+    
+    List<Sighting> getLatestTenSightings();
 }

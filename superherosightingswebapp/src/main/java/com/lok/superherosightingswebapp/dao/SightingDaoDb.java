@@ -122,6 +122,15 @@ public class SightingDaoDb implements SightingDao {
         jdbc.update(DELETE_SIGHTING, id);
     }
 
+    @Override
+    public List<Sighting> getLatestTenSightings() {
+        final String GET_LATEST_TEN_SIGHTINGS = "SELECT * FROM sighting "
+                                                + "ORDER BY date DESC LIMIT 10;";
+        List<Sighting> sightings = jdbc.query(GET_LATEST_TEN_SIGHTINGS, new SightingMapper());
+        associateLocationAndSuperhero(sightings);
+        return sightings;
+    }
+
     public static final class SightingMapper implements RowMapper<Sighting> {
 
         @Override

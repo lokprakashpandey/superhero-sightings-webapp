@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                    <h1>Superhero Sightings Web Application - Organizations</h1>
+                    <h1>Superhero Sightings Web Application - Superheroes</h1>
                 </div>
             </div>
             <div class="row m-4 border border-dark">
@@ -35,25 +35,26 @@
                     <a href="superpowers" class="btn btn-outline-primary btn-lg">Superpowers</a>
                 </div>
             </div>
-            
-            <!-- Organizations Form -->
+
+            <!-- Superpowers Form -->
             <div class="row m-4 border border-dark">
                 <div class="col-3 text-center m-3">
-                    <span class="h3">Add Organization</span>
+                    <span class="h3">Edit Superhero</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addOrganization" method="POST">
+                    <form action="editSuperhero" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
                             <div class="col-9">
                                 <input type="text" name="name" 
                                        id="name" class="form-control" 
-                                       th:value="${organization!=null}?${organization.name}:''"/>
+                                       th:value="${superhero.name}"/>
 
-                                <div th:if="${nameError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${nameError.getDefaultMessage()}"></p>
+                                <div th:if="${#fields.hasErrors('superhero.name')}">
+                                    <p th:each="error : ${#fields.errors('superhero.name')}" 
+                                       class="alert alert-danger" th:text="${error}">
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -63,75 +64,50 @@
                             <div class="col-9">
                                 <input type="text" name="description" 
                                        id="description" class="form-control"
-                                       th:value="${organization!=null}?${organization.description}:''"/>
-                                <div th:if="${descriptionError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${descriptionError.getDefaultMessage()}"></p>
+                                       th:value="${superhero.description}"/>
+                                <div th:if="${#fields.hasErrors('superhero.description')}">
+                                    <p th:each="error : ${#fields.errors('superhero.description')}" 
+                                       class="alert alert-danger" th:text="${error}">
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-3 col-form-label">
-                                Address</label>
+                            <label for="superpower" class="col-3 col-form-label">Superpower</label>
                             <div class="col-9">
-                                <input type="text" name="address" 
-                                       id="address" class="form-control"
-                                       th:value="${organization!=null}?${organization.address}:''"/>
-                                <div th:if="${addressError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${addressError.getDefaultMessage()}"></p>
-                                </div>
+                                <select id="superpower" name="superpowerId" class="form-control" >
+                                    <option th:each="superpower : ${superpowers}" 
+                                            th:value="${superpower.id}" 
+                                            th:text="${superpower.name + ' - ' 
+                                            + superpower.description}" 
+                                            th:selected="${superhero.superpower.id == superpower.id}">
+                                        Superpower Name</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="contactNumber" class="col-3 col-form-label">
-                                Contact Number</label>
+                            <label for="organizations" class="col-3 col-form-label">Organizations</label>
                             <div class="col-9">
-                                <input type="text" name="contactNumber" 
-                                       id="contactNumber" class="form-control"
-                                       th:value="${organization!=null}?${organization.contactNumber}:''" 
-                                       />
-                                <div th:if="${contactNumberError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${contactNumberError.getDefaultMessage()}"></p>
+                                <select multiple id="organizations" name="organizationId" class="form-control">
+                                    <option th:each="organization : ${organizations}" 
+                                            th:value="${organization.id}" 
+                                            th:text="${organization.name}" 
+                                            th:selected="${superhero.organizations.contains(organization)}">
+                                        Organization Name</option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('superhero.organizations')}">
+                                    <p th:each="error : ${#fields.errors('superhero.organizations')}" 
+                                       class="alert alert-danger" th:text="${error}"> 
+                                        Bad Organization </p>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Organization</button>
+                        <input type="hidden" name="id" th:value="${superhero.id}"/>
+                        <button type="submit" class="btn btn-primary">Update Superhero</button>
                     </form>
                 </div>
             </div>
-            
-            <!-- Organizations Table -->
-            <div class="row m-4 border border-dark">
-                <div class="col text-center m-3">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Address</th>
-                                <th>Contact Number</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="organization : ${organizations}">
-                                <td th:text="${organization.id}">ID</td>
-                                <td th:text="${organization.name}">Name</td>
-                                <td th:text="${organization.description}">Description</td>
-                                <td th:text="${organization.address}">Address</td>
-                                <td th:text="${organization.contactNumber}">Contact No.</td>
-                                <td><a href="#" th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteOrganization(id=${organization.id})}">Delete</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> 
+
         <!-- End main body -->
 
         <!-- Optional JavaScript -->

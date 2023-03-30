@@ -8,11 +8,17 @@ package com.lok.superherosightingswebapp.dto;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 
 public class Sighting {
 
     private int id;
+    
+    @NotNull(message = "Date cannot be null")
+    @PastOrPresent(message = "Date cannot be in the future")
     private LocalDate date;
+    
     private Superhero superhero;
     private Location location;
 

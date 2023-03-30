@@ -30,6 +30,12 @@ public class SuperpowerController {
         return "superpowers";
     }
     
+    @GetMapping("addSuperpower")
+    public String addSuperpower(Model model){
+        model.addAttribute("superpowers", superpowerService.getAllSuperpowers());
+        return "superpowers";
+    }
+    
     @PostMapping("addSuperpower")
     public String addSuperpower(@Valid Superpower superpower, BindingResult result, Model model) {
         if(result.hasErrors()) {

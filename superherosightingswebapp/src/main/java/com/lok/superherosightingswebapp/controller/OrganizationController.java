@@ -30,6 +30,12 @@ public class OrganizationController {
         return "organizations";
     }
     
+    @GetMapping("addOrganization")
+    public String addOrganization(Model model){
+        model.addAttribute("organizations", organizationService.getAllOrganizations());
+        return "organizations";
+    }
+    
     @PostMapping("addOrganization")
     public String addOrganization(@Valid Organization organization, BindingResult result, Model model) {
         if(result.hasErrors()) {

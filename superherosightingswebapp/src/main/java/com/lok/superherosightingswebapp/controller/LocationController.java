@@ -30,8 +30,14 @@ public class LocationController {
         return "locations";
     }
     
+    @GetMapping("addLocation")
+    public String addLocation(Model model){
+        model.addAttribute("locations", locationService.getAllLocations());
+        return "locations";
+    }
+    
     @PostMapping("addLocation")
-    public String addSuperpower(@Valid Location location, BindingResult result, Model model) {
+    public String addLocation(@Valid Location location, BindingResult result, Model model) {
         if(result.hasErrors()) {
             //Set model to retrive data entered
             model.addAttribute("location",location);

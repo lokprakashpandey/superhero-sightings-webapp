@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                    <h1>Superhero Sightings Web Application - Organizations</h1>
+                    <h1>Superhero Sightings Web Application - Sightings</h1>
                 </div>
             </div>
             <div class="row m-4 border border-dark">
@@ -39,65 +39,52 @@
             <!-- Organizations Form -->
             <div class="row m-4 border border-dark">
                 <div class="col-3 text-center m-3">
-                    <span class="h3">Add Organization</span>
+                    <span class="h3">Add Sighting</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addOrganization" method="POST">
+                    <form action="addSighting" method="POST">
                         <div class="form-group row">
-                            <label for="name" class="col-3 col-form-label">
-                                Name</label>
+                            <label for="date" class="col-3 col-form-label">
+                                Date</label>
                             <div class="col-9">
-                                <input type="text" name="name" 
-                                       id="name" class="form-control" 
-                                       th:value="${organization!=null}?${organization.name}:''"/>
-
-                                <div th:if="${nameError != null}">
+                                <input type="date" name="date" 
+                                       id="date" class="form-control" 
+                                       th:value="${sighting!=null}?${sighting.date}:''"/>
+                                <div th:if="${dateError != null}">
                                     <p class="alert alert-danger"
-                                       th:text="${nameError.getDefaultMessage()}"></p>
+                                       th:text="${dateError.getDefaultMessage()}"></p>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="description" class="col-3 col-form-label">
-                                Description</label>
+                            <label for="location" class="col-3 col-form-label">
+                                Location</label>
                             <div class="col-9">
-                                <input type="text" name="description" 
-                                       id="description" class="form-control"
-                                       th:value="${organization!=null}?${organization.description}:''"/>
-                                <div th:if="${descriptionError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${descriptionError.getDefaultMessage()}"></p>
-                                </div>
+                                <select id="location" name="locationId" class="form-control" >
+                                    <option th:each="location : ${locations}" 
+                                            th:value="${location.id}" 
+                                            th:text="${location.name + ' - ' 
+                                            + location.address}"
+                                            th:selected="${sighting != null and sighting.location.id == location.id}">
+                                        Location Name & Address</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-3 col-form-label">
-                                Address</label>
+                            <label for="superhero" class="col-3 col-form-label">
+                                Superhero</label>
                             <div class="col-9">
-                                <input type="text" name="address" 
-                                       id="address" class="form-control"
-                                       th:value="${organization!=null}?${organization.address}:''"/>
-                                <div th:if="${addressError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${addressError.getDefaultMessage()}"></p>
-                                </div>
+                                <select id="superhero" name="superheroId" class="form-control" >
+                                    <option th:each="superhero : ${superheroes}" 
+                                            th:value="${superhero.id}" 
+                                            th:text="${superhero.name + ' - ' 
+                                            + superhero.description}"
+                                            th:selected="${sighting != null and sighting.superhero.id == superhero.id}">
+                                        Superhero Name & Description</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="contactNumber" class="col-3 col-form-label">
-                                Contact Number</label>
-                            <div class="col-9">
-                                <input type="text" name="contactNumber" 
-                                       id="contactNumber" class="form-control"
-                                       th:value="${organization!=null}?${organization.contactNumber}:''" 
-                                       />
-                                <div th:if="${contactNumberError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${contactNumberError.getDefaultMessage()}"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add Organization</button>
+                        <button type="submit" class="btn btn-primary">Add Sighting</button>
                     </form>
                 </div>
             </div>
@@ -109,23 +96,23 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Address</th>
-                                <th>Contact Number</th>
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Superhero</th>
+                                <th>Details</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="organization : ${organizations}">
-                                <td th:text="${organization.id}">ID</td>
-                                <td th:text="${organization.name}">Name</td>
-                                <td th:text="${organization.description}">Description</td>
-                                <td th:text="${organization.address}">Address</td>
-                                <td th:text="${organization.contactNumber}">Contact No.</td>
-                                <td><a href="#" th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteOrganization(id=${organization.id})}">Delete</a></td>
+                            <tr th:each="sighting : ${sightings}">
+                                <td th:text="${sighting.id}">ID</td>
+                                <td th:text="${sighting.date}">Date</td>
+                                <td th:text="${sighting.location.name}">Location</td>
+                                <td th:text="${sighting.superpower.name}">Superpower</td>
+                                <td><a href="#" th:href="@{/sightingDetail(id=${sighting.id})}">Details</a></td>
+                                <td><a href="#" th:href="@{/editSighting(id=${sighting.id})}">Edit</a></td>
+                                <td><a href="#" th:href="@{/deleteSighting(id=${sighting.id})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -141,5 +128,4 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>
 </html>
-
 

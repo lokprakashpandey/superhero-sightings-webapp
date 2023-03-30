@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                    <h1>Superhero Sightings Web Application - Organizations</h1>
+                    <h1>Superhero Sightings Web Application - Superheroes</h1>
                 </div>
             </div>
             <div class="row m-4 border border-dark">
@@ -39,17 +39,17 @@
             <!-- Organizations Form -->
             <div class="row m-4 border border-dark">
                 <div class="col-3 text-center m-3">
-                    <span class="h3">Add Organization</span>
+                    <span class="h3">Add Superhero</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addOrganization" method="POST">
+                    <form action="addSuperhero" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
                             <div class="col-9">
                                 <input type="text" name="name" 
                                        id="name" class="form-control" 
-                                       th:value="${organization!=null}?${organization.name}:''"/>
+                                       th:value="${superhero!=null}?${superhero.name}:''"/>
 
                                 <div th:if="${nameError != null}">
                                     <p class="alert alert-danger"
@@ -63,7 +63,7 @@
                             <div class="col-9">
                                 <input type="text" name="description" 
                                        id="description" class="form-control"
-                                       th:value="${organization!=null}?${organization.description}:''"/>
+                                       th:value="${superhero!=null}?${superhero.description}:''"/>
                                 <div th:if="${descriptionError != null}">
                                     <p class="alert alert-danger"
                                        th:text="${descriptionError.getDefaultMessage()}"></p>
@@ -71,33 +71,37 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="address" class="col-3 col-form-label">
-                                Address</label>
+                            <label for="superpower" class="col-3 col-form-label">
+                                Superpower</label>
                             <div class="col-9">
-                                <input type="text" name="address" 
-                                       id="address" class="form-control"
-                                       th:value="${organization!=null}?${organization.address}:''"/>
-                                <div th:if="${addressError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${addressError.getDefaultMessage()}"></p>
-                                </div>
+                                <select id="superpower" name="superpowerId" class="form-control" >
+                                    <option th:each="superpower : ${superpowers}" 
+                                            th:value="${superpower.id}" 
+                                            th:text="${superpower.name + ' - ' 
+                                            + superpower.description}"
+                                            th:selected="${superhero != null and superhero.superpower.id == superpower.id}">
+                                        Superpower Name</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="contactNumber" class="col-3 col-form-label">
-                                Contact Number</label>
+                            <label for="organizations" class="col-3 col-form-label">Organizations</label>
                             <div class="col-9">
-                                <input type="text" name="contactNumber" 
-                                       id="contactNumber" class="form-control"
-                                       th:value="${organization!=null}?${organization.contactNumber}:''" 
-                                       />
-                                <div th:if="${contactNumberError != null}">
-                                    <p class="alert alert-danger"
-                                       th:text="${contactNumberError.getDefaultMessage()}"></p>
+                                <select multiple id="organizations" name="organizationId" class="form-control">
+                                    <option th:each="organization : ${organizations}" 
+                                            th:value="${organization.id}" 
+                                            th:text="${organization.name}"
+                                            th:selected="${superhero != null and superhero.organizations != null and superhero.organizations.contains(organization)}">
+                                        Organization Name</option>
+                                </select>
+                                <div th:if="${superhero != null and #fields.hasErrors('superhero.organizations')}">
+                                    <p th:each="error : ${#fields.errors('superhero.organizations')}" 
+                                       class="alert alert-danger" th:text="${error}"> 
+                                        Bad organization </p>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Organization</button>
+                        <button type="submit" class="btn btn-primary">Add Superhero</button>
                     </form>
                 </div>
             </div>
@@ -111,21 +115,21 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>Address</th>
-                                <th>Contact Number</th>
+                                <th>Superpower</th>
+                                <th>Details</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="organization : ${organizations}">
-                                <td th:text="${organization.id}">ID</td>
-                                <td th:text="${organization.name}">Name</td>
-                                <td th:text="${organization.description}">Description</td>
-                                <td th:text="${organization.address}">Address</td>
-                                <td th:text="${organization.contactNumber}">Contact No.</td>
-                                <td><a href="#" th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteOrganization(id=${organization.id})}">Delete</a></td>
+                            <tr th:each="superhero : ${superheroes}">
+                                <td th:text="${superhero.id}">ID</td>
+                                <td th:text="${superhero.name}">Name</td>
+                                <td th:text="${superhero.description}">Description</td>
+                                <td th:text="${superhero.superpower.name}">Superpower</td>
+                                <td><a href="#" th:href="@{/superheroDetail(id=${superhero.id})}">Details</a></td>
+                                <td><a href="#" th:href="@{/editSuperhero(id=${superhero.id})}">Edit</a></td>
+                                <td><a href="#" th:href="@{/deleteSuperhero(id=${superhero.id})}">Delete</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -141,5 +145,3 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>
 </html>
-
-

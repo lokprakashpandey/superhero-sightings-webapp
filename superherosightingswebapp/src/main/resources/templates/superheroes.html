@@ -20,19 +20,19 @@
             </div>
             <div class="row m-4 border border-dark">
                 <div class="col text-center m-3">
+                    <a href="superpowers" class="btn btn-outline-primary btn-lg">Superpowers</a>
+                </div>
+                <div class="col text-center m-3">
                     <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
                 </div>
                 <div class="col text-center m-3">
                     <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
                 </div>
                 <div class="col text-center m-3">
-                    <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
-                </div>
-                <div class="col text-center m-3">
                     <a href="superheroes" class="btn btn-outline-primary btn-lg">Superheroes</a>
                 </div>
                 <div class="col text-center m-3">
-                    <a href="superpowers" class="btn btn-outline-primary btn-lg">Superpowers</a>
+                    <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
                 </div>
             </div>
             
@@ -42,7 +42,7 @@
                     <span class="h3">Add Superhero</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addSuperhero" method="POST">
+                    <form action="addSuperhero" enctype="multipart/form-data" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
@@ -98,6 +98,20 @@
                                     <p th:each="error : ${#fields.errors('superhero.organizations')}" 
                                        class="alert alert-danger" th:text="${error}"> 
                                         Bad organization </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="superheroImage" class="col-3 col-form-label">
+                                Image</label>
+                            <div class="col-9">
+                                <input type="file" name="superheroSaveImage" 
+                                       id="superheroImage" class="file"
+                                       />
+                                <div th:if="${superhero != null and #fields.hasErrors('superhero.image')}">
+                                    <p th:each="error : ${#fields.errors('superhero.image')}" 
+                                       class="alert alert-danger" th:text="${error}"> 
+                                        Bad Image </p>
                                 </div>
                             </div>
                         </div>

@@ -20,26 +20,32 @@
             </div>
             <div class="row m-4 border border-dark">
                 <div class="col text-center m-3">
+                    <a href="superpowers" class="btn btn-outline-primary btn-lg">Superpowers</a>
+                </div>
+                <div class="col text-center m-3">
                     <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
                 </div>
                 <div class="col text-center m-3">
                     <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
                 </div>
                 <div class="col text-center m-3">
-                    <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
-                </div>
-                <div class="col text-center m-3">
                     <a href="superheroes" class="btn btn-outline-primary btn-lg">Superheroes</a>
                 </div>
                 <div class="col text-center m-3">
-                    <a href="superpowers" class="btn btn-outline-primary btn-lg">Superpowers</a>
+                    <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
                 </div>
             </div>
             
             <div class="row m-4 border border-dark">
+                <div class="col-6 text-right"><strong>Pic</strong></div>
+                <div class="col-6 text-left">
+                    <img th:src="'data:image/jpeg;base64,' + ${superheroImage}" 
+                         alt="Superhero Image" width="100" height="100"/>
+                </div>
                 <div class="col-6 text-right"><strong>ID</strong></div>
                 <div class="col-6 text-left">
                     <span th:text="${superhero.id}">display id</span>
+                    
                 </div>
 
                 <div class="col-6 text-right"><strong>Name</strong></div>

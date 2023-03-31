@@ -74,11 +74,12 @@ public class SuperheroDaoDb implements SuperheroDao {
     @Override
     @Transactional
     public Superhero addSuperhero(Superhero superhero) {
-        final String INSERT_SUPERHERO = "INSERT INTO superhero(name, description, superpowerId) "
-                + "VALUES(?,?,?)";
+        final String INSERT_SUPERHERO = "INSERT INTO superhero(name, description, image, superpowerId) "
+                + "VALUES(?,?,?,?)";
         jdbc.update(INSERT_SUPERHERO,
                 superhero.getName(),
                 superhero.getDescription(),
+                superhero.getImage(),
                 superhero.getSuperpower().getId());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -101,10 +102,11 @@ public class SuperheroDaoDb implements SuperheroDao {
     @Transactional
     public void updateSuperhero(Superhero superhero) {
         final String UPDATE_SUPERHERO = "UPDATE superhero SET name = ?, description = ?, "
-                + "superpowerId = ? WHERE id = ?";
+                + "image = ?, superpowerId = ? WHERE id = ?";
         jdbc.update(UPDATE_SUPERHERO,
                 superhero.getName(),
                 superhero.getDescription(),
+                superhero.getImage(),
                 superhero.getSuperpower().getId(),
                 superhero.getId());
 
@@ -158,6 +160,7 @@ public class SuperheroDaoDb implements SuperheroDao {
             superhero.setId(rs.getInt("id"));
             superhero.setName(rs.getString("name"));
             superhero.setDescription(rs.getString("description"));
+            superhero.setImage(rs.getBytes("image"));
             return superhero;
         }
     }

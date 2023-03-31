@@ -12,7 +12,9 @@ import com.lok.superherosightingswebapp.dto.Superpower;
 import com.lok.superherosightingswebapp.service.OrganizationService;
 import com.lok.superherosightingswebapp.service.SuperheroService;
 import com.lok.superherosightingswebapp.service.SuperpowerService;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -22,7 +24,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class SuperheroController {
@@ -53,8 +58,18 @@ public class SuperheroController {
     }
 
     @PostMapping("addSuperhero")
-    public String addSuperhero(@Valid Superhero superhero, BindingResult result, HttpServletRequest request, Model model) {
-
+    public String addSuperhero(@Valid @ModelAttribute("superhero") Superhero superhero, 
+                                    BindingResult result, 
+                                    HttpServletRequest request, 
+                                    @RequestParam("superheroSaveImage") MultipartFile file,
+                                    Model model) {
+        try{
+            superhero.setImage(file.getBytes()); 
+        }catch(IOException ex){ 
+            FieldError error = new FieldError("superhero", "image", ex.getMessage());
+            result.addError(error);      
+        }       
+        
         String superpowerId = request.getParameter("superpowerId");
 
         String[] organizationIds = request.getParameterValues("organizationId");
@@ -72,9 +87,12 @@ public class SuperheroController {
         }
 
         superhero.setOrganizations(organizations);
-
+        
+        System.out.println("Error"+result);
+        
         if (result.hasErrors()) {
             //Set model to retrieve data entered
+            System.out.println("33333333");
             model.addAttribute("superhero", superhero);
             //Catch error for display
             model.addAttribute("nameError", result.getFieldError("name"));
@@ -94,13 +112,26 @@ public class SuperheroController {
     @GetMapping("superheroDetail")
     public String superheroDetail(Integer id, Model model) {
         Superhero superhero = superheroService.getSuperheroById(id);
+        byte[] superheroImage = superhero.getImage();
+        String superheroImageData = null;
+        if(superheroImage != null) {
+            superheroImageData = Base64.getMimeEncoder().encodeToString(superheroImage);
+        }
         model.addAttribute("superhero", superhero);
+        model.addAttribute("superheroImage", superheroImageData);        
         return "superheroDetail";
     }
 
     @GetMapping("editSuperhero")
     public String editSuperhero(Integer id, Model model) {
         Superhero superhero = superheroService.getSuperheroById(id);
+        byte[] superheroImage = superhero.getImage();
+        String superheroImageData = null;
+        if(superheroImage != null) {
+            superheroImageData = Base64.getMimeEncoder().encodeToString(superheroImage);
+        }
+        model.addAttribute("superhero", superhero);
+        model.addAttribute("superheroImage", superheroImageData);        
         List<Superpower> superpowers = superpowerService.getAllSuperpowers();
         List<Organization> organizations = organizationService.getAllOrganizations();
         model.addAttribute("superhero", superhero);

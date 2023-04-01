@@ -62,14 +62,19 @@
                 <div class="col-6 text-left">
                     <span th:text="${location.longitude}">display longitude</span>
                 </div>
-                <div class="col-6 text-right">
+                <div class="col-5 text-right">
                     <strong>
                         <a href="#" th:href="@{/editLocation(id=${location.id})}">Edit</a>
                     </strong>
                 </div>
-                <div class="col-6 text-left">
+                <div class="col-2 text-center">
                     <strong>
                     <a href="#" th:href="@{/deleteLocation(id=${location.id})}">Delete</a>
+                    </strong>
+                </div>
+                <div class="col-5 text-left">
+                    <strong>
+                    <a href="locations">Cancel</a>
                     </strong>
                 </div>
             </div>           

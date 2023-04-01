@@ -58,14 +58,19 @@
                 <div class="col-6 text-left">
                     <span th:text="${organization.contactNumber}">display contact no.</span>
                 </div>
-                <div class="col-6 text-right">
+                <div class="col-5 text-right">
                     <strong>
                         <a href="#" th:href="@{/editOrganization(id=${organization.id})}">Edit</a>
                     </strong>
                 </div>
-                <div class="col-6 text-left">
+                <div class="col-2 text-center">
                     <strong>
                     <a href="#" th:href="@{/deleteOrganization(id=${organization.id})}">Delete</a>
+                    </strong>
+                </div>
+                <div class="col-5 text-left">
+                    <strong>
+                    <a href="organizations">Cancel</a>
                     </strong>
                 </div>
             </div>           

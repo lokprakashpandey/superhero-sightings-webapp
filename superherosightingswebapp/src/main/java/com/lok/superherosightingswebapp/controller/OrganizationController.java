@@ -78,7 +78,7 @@ public class OrganizationController {
             return "editOrganization";
         }
         organizationService.updateOrganization(organization);
-        return "redirect:/organizations";
+        return "redirect:/organizationDetail?id=" + organization.getId();
     }
     
     @GetMapping("deleteOrganization")

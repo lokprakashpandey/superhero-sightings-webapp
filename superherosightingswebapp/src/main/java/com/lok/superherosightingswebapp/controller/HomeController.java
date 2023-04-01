@@ -18,7 +18,7 @@ public class HomeController {
     @Autowired
     SightingService sightingService;
 
-    @RequestMapping("/")
+    @RequestMapping({"/","/home"})
     public String home(Model model) {
         model.addAttribute("sightings", sightingService.getLatestTenSightings());
         return "home";

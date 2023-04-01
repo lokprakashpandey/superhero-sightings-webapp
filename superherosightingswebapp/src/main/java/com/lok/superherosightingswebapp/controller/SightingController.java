@@ -116,7 +116,7 @@ public class SightingController {
         }
 
         sightingService.updateSighting(sighting);
-        return "redirect:/sightings";
+        return "redirect:/sightingDetail?id=" + sighting.getId();
     }
 
     @GetMapping("deleteSighting")

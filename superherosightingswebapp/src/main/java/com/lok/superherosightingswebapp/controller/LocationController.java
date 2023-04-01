@@ -79,7 +79,7 @@ public class LocationController {
             return "editLocation";
         }
         locationService.updateLocation(location);
-        return "redirect:/locations";
+        return "redirect:/locationDetail?id=" + location.getId();
     }
     
     @GetMapping("deleteLocation")

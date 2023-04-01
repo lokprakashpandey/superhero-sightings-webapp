@@ -72,14 +72,19 @@
                             display organization</span><br/>
                     </span>
                 </div>
-                <div class="col-6 text-right">
+                <div class="col-5 text-right">
                     <strong>
                         <a href="#" th:href="@{/editSighting(id=${sighting.id})}">Edit</a>
                     </strong>
                 </div>
-                <div class="col-6 text-left">
+                <div class="col-2 text-center">
                     <strong>
                     <a href="#" th:href="@{/deleteSighting(id=${sighting.id})}">Delete</a>
+                    </strong>
+                </div>
+                <div class="col-5 text-left">
+                    <strong>
+                    <a href="sightings">Cancel</a>
                     </strong>
                 </div>
             </div>

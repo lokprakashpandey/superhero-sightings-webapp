@@ -167,7 +167,8 @@ public class SuperheroController {
         }
 
         superheroService.updateSuperhero(superhero);
-        return "redirect:/superheroes";
+        return "redirect:/superheroDetail?id=" + superhero.getId();
+
     }
 
     @GetMapping("deleteSuperhero")

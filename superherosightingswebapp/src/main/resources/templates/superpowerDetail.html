@@ -50,14 +50,19 @@
                 <div class="col-6 text-left">
                     <span th:text="${superpower.description}">display description</span>
                 </div>
-                <div class="col-6 text-right">
+                <div class="col-5 text-right">
                     <strong>
                         <a href="#" th:href="@{/editSuperpower(id=${superpower.id})}">Edit</a>
                     </strong>
                 </div>
-                <div class="col-6 text-left">
+                <div class="col-2 text-center">
                     <strong>
                     <a href="#" th:href="@{/deleteSuperpower(id=${superpower.id})}">Delete</a>
+                    </strong>
+                </div>
+                <div class="col-5 text-left">
+                    <strong>
+                    <a href="superpowers">Cancel</a>
                     </strong>
                 </div>
             </div>           

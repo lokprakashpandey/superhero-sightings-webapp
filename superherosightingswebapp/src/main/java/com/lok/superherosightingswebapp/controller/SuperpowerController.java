@@ -76,7 +76,7 @@ public class SuperpowerController {
             return "editSuperpower";
         }
         superpowerService.updateSuperpower(superpower);
-        return "redirect:/superpowers";
+        return "redirect:/superpowerDetail?id=" + superpower.getId();
     }
     
     @GetMapping("deleteSuperpower")

@@ -118,6 +118,8 @@
                         </div>
                         <input type="hidden" name="id" th:value="${location.id}"/>
                         <button type="submit" class="btn btn-primary">Update Location</button>
+                        <a th:href="@{/locationDetail(id=${location.id})}" 
+                                            class="btn btn-success">OK</a>
                         <a href="locations" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>

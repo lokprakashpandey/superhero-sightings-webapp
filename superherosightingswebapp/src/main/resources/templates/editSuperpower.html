@@ -74,6 +74,8 @@
                         </div>
                         <input type="hidden" name="id" th:value="${superpower.id}"/>
                         <button type="submit" class="btn btn-primary">Update Superpower</button>
+                        <a th:href="@{/superpowerDetail(id=${superpower.id})}" 
+                                            class="btn btn-success">OK</a>
                         <a href="superpowers" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>

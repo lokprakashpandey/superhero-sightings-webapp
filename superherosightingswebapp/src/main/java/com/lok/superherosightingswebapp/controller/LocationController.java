@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LocationController {
@@ -75,8 +76,13 @@ public class LocationController {
     }
     
     @GetMapping("deleteLocation")
-    public String deleteSuperpower(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+    public String showDeleteLocationForm(@RequestParam("id") int id, Model model) {
+        model.addAttribute("id", id);
+        return "deleteLocation";
+    }
+    
+    @PostMapping("/deleteLocation")
+    public String deleteLocation(@RequestParam("id") int id) {
         locationService.deleteLocationById(id);
         return "redirect:/locations";
     }

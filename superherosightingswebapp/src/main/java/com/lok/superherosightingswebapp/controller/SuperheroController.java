@@ -92,7 +92,6 @@ public class SuperheroController {
         
         if (result.hasErrors()) {
             //Set model to retrieve data entered
-            System.out.println("33333333");
             model.addAttribute("superhero", superhero);
             //Catch error for display
             model.addAttribute("nameError", result.getFieldError("name"));
@@ -172,7 +171,13 @@ public class SuperheroController {
     }
 
     @GetMapping("deleteSuperhero")
-    public String deleteSuperhero(Integer id) {
+    public String showDeleteSuperheroForm(@RequestParam("id") int id, Model model) {
+        model.addAttribute("id", id);
+        return "deleteSuperhero";
+    }
+    
+    @PostMapping("/deleteSuperhero")
+    public String deleteSuperhero(@RequestParam("id") int id) {
         superheroService.deleteSuperheroById(id);
         return "redirect:/superheroes";
     }

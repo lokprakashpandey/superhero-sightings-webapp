@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SuperpowerController {
@@ -72,8 +73,13 @@ public class SuperpowerController {
     }
     
     @GetMapping("deleteSuperpower")
-    public String deleteSuperpower(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+    public String showDeleteSuperpowerForm(@RequestParam("id") int id, Model model) {
+        model.addAttribute("id", id);
+        return "deleteSuperpower";
+    }
+    
+    @PostMapping("/deleteSuperpower")
+    public String deleteSuperpower(@RequestParam("id") int id) {
         superpowerService.deleteSuperpowerById(id);
         return "redirect:/superpowers";
     }

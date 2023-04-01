@@ -12,6 +12,7 @@ import com.lok.superherosightingswebapp.dto.Superhero;
 import com.lok.superherosightingswebapp.service.LocationService;
 import com.lok.superherosightingswebapp.service.SightingService;
 import com.lok.superherosightingswebapp.service.SuperheroService;
+import java.util.Base64;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SightingController {
@@ -77,6 +79,13 @@ public class SightingController {
     @GetMapping("sightingDetail")
     public String sightingDetail(Integer id, Model model) {
         Sighting sighting = sightingService.getSightingById(id);
+        Superhero superhero = superheroService.getSuperheroById(sighting.getSuperhero().getId());
+        byte[] superheroImage = superhero.getImage();
+        String superheroImageData = null;
+        if(superheroImage != null) {
+            superheroImageData = Base64.getMimeEncoder().encodeToString(superheroImage);
+        }
+        model.addAttribute("superheroImage", superheroImageData);        
         model.addAttribute("sighting", sighting);
         return "sightingDetail";
     }
@@ -111,7 +120,13 @@ public class SightingController {
     }
 
     @GetMapping("deleteSighting")
-    public String deleteSighting(Integer id) {
+    public String showDeleteSightingForm(@RequestParam("id") int id, Model model) {
+        model.addAttribute("id", id);
+        return "deleteSighting";
+    }
+    
+    @PostMapping("/deleteSighting")
+    public String deleteSighting(@RequestParam("id") int id) {
         sightingService.deleteSightingById(id);
         return "redirect:/sightings";
     }

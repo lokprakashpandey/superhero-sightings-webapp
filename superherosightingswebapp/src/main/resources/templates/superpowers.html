@@ -83,7 +83,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Description</th>
+                                <th>Details</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -92,7 +92,7 @@
                             <tr th:each="superpower : ${superpowers}">
                                 <td th:text="${superpower.id}">Superpower ID</td>
                                 <td th:text="${superpower.name}">Superpower Name</td>
-                                <td th:text="${superpower.description}">Superpower Description</td>
+                                <td><a href="#" th:href="@{/superpowerDetail(id=${superpower.id})}">Details</a></td>
                                 <td><a href="#" th:href="@{/editSuperpower(id=${superpower.id})}">Edit</a></td>
                                 <td><a href="#" th:href="@{/deleteSuperpower(id=${superpower.id})}">Delete</a></td>
                             </tr>

@@ -58,6 +58,13 @@ public class LocationController {
         }
     }
 
+    @GetMapping("locationDetail")
+    public String locationDetail(Integer id, Model model) {
+        Location location = locationService.getLocationById(id);
+        model.addAttribute("location", location);
+        return "locationDetail";
+    }
+    
     @GetMapping("editLocation")
     public String editLocation(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));

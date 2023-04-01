@@ -69,6 +69,16 @@
                             display organization</span><br/>
                     </span>
                 </div>
+                <div class="col-6 text-right">
+                    <strong>
+                        <a href="#" th:href="@{/editSuperhero(id=${superhero.id})}">Edit</a>
+                    </strong>
+                </div>
+                <div class="col-6 text-left">
+                    <strong>
+                    <a href="#" th:href="@{/deleteSuperhero(id=${superhero.id})}">Delete</a>
+                    </strong>
+                </div>
             </div>
         </div> 
         <!-- End main body -->

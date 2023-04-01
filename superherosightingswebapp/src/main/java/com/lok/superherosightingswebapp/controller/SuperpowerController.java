@@ -55,6 +55,13 @@ public class SuperpowerController {
         }
     }
     
+    @GetMapping("superpowerDetail")
+    public String superpowerDetail(Integer id, Model model) {
+        Superpower superpower = superpowerService.getSuperpowerById(id);
+        model.addAttribute("superpower", superpower);
+        return "superpowerDetail";
+    }
+    
     @GetMapping("editSuperpower")
     public String editSuperpower(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));

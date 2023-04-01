@@ -128,8 +128,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Description</th>
-                                <th>Superpower</th>
                                 <th>Details</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -139,8 +137,6 @@
                             <tr th:each="superhero : ${superheroes}">
                                 <td th:text="${superhero.id}">ID</td>
                                 <td th:text="${superhero.name}">Name</td>
-                                <td th:text="${superhero.description}">Description</td>
-                                <td th:text="${superhero.superpower.name}">Superpower</td>
                                 <td><a href="#" th:href="@{/superheroDetail(id=${superhero.id})}">Details</a></td>
                                 <td><a href="#" th:href="@{/editSuperhero(id=${superhero.id})}">Edit</a></td>
                                 <td><a href="#" th:href="@{/deleteSuperhero(id=${superhero.id})}">Delete</a></td>

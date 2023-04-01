@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,9 +58,19 @@ public class SightingController {
 
         String locationId = request.getParameter("locationId");
         String superheroId = request.getParameter("superheroId");
-        sighting.setLocation(locationService.getLocationById(Integer.parseInt(locationId)));
-        sighting.setSuperhero(superheroService.getSuperheroById(Integer.parseInt(superheroId)));
-
+        if(locationId != null) {
+            sighting.setLocation(locationService.getLocationById(Integer.parseInt(locationId)));
+        } else {
+            FieldError locationError = new FieldError("sighting", "location", "Location information absent");
+            result.addError(locationError);
+        }
+        if(superheroId != null) {
+            sighting.setSuperhero(superheroService.getSuperheroById(Integer.parseInt(superheroId)));
+        } else {
+            FieldError superheroError = new FieldError("sighting", "superhero", "Superhero information absent");
+            result.addError(superheroError);
+        }   
+        
         if (result.hasErrors()) {
             //Set model to retrieve data entered
             model.addAttribute("sighting", sighting);

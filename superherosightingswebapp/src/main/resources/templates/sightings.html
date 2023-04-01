@@ -68,6 +68,11 @@
                                             th:selected="${sighting != null and sighting.location.id == location.id}">
                                         Location Name & Address</option>
                                 </select>
+                                <div th:if="${sighting != null and #fields.hasErrors('sighting.location')}">
+                                    <p th:each="error : ${#fields.errors('sighting.location')}" 
+                                       class="alert alert-danger" th:text="${error}">
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -82,6 +87,11 @@
                                             th:selected="${sighting != null and sighting.superhero.id == superhero.id}">
                                         Superhero Name & Description</option>
                                 </select>
+                                <div th:if="${sighting != null and #fields.hasErrors('sighting.superhero')}">
+                                    <p th:each="error : ${#fields.errors('sighting.superhero')}" 
+                                       class="alert alert-danger" th:text="${error}">
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Sighting</button>

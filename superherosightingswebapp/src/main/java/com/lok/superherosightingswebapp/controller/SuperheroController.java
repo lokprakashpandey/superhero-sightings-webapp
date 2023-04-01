@@ -58,38 +58,39 @@ public class SuperheroController {
     }
 
     @PostMapping("addSuperhero")
-    public String addSuperhero(@Valid @ModelAttribute("superhero") Superhero superhero, 
-                                    BindingResult result, 
-                                    HttpServletRequest request, 
-                                    @RequestParam("superheroSaveImage") MultipartFile file,
-                                    Model model) {
-        try{
-            superhero.setImage(file.getBytes()); 
-        }catch(IOException ex){ 
+    public String addSuperhero(@Valid @ModelAttribute("superhero") Superhero superhero,
+            BindingResult result,
+            HttpServletRequest request,
+            @RequestParam("superheroSaveImage") MultipartFile file,
+            Model model) {
+        try {
+            superhero.setImage(file.getBytes());
+        } catch (IOException ex) {
             FieldError error = new FieldError("superhero", "image", ex.getMessage());
-            result.addError(error);      
-        }       
-        
+            result.addError(error);
+        }
+
         String superpowerId = request.getParameter("superpowerId");
+        if(superpowerId != null) {
+            superhero.setSuperpower(superpowerService.getSuperpowerById(Integer.parseInt(superpowerId)));
+        } else {
+            FieldError superpowerError = new FieldError("superhero", "superpower", "Superpower information absent");
+            result.addError(superpowerError);
+        }
 
         String[] organizationIds = request.getParameterValues("organizationId");
-
-        superhero.setSuperpower(superpowerService.getSuperpowerById(Integer.parseInt(superpowerId)));
-
         List<Organization> organizations = new ArrayList<>();
         if (organizationIds != null) {
             for (String organizationId : organizationIds) {
                 organizations.add(organizationService.getOrganizationById(Integer.parseInt(organizationId)));
             }
         } else {
-            FieldError error = new FieldError("superhero", "organizations", "Must include one organization");
-            result.addError(error);
+            FieldError organizationError = new FieldError("superhero", "organizations", "Must include one organization");
+            result.addError(organizationError);
         }
 
         superhero.setOrganizations(organizations);
-        
-        System.out.println("Error"+result);
-        
+
         if (result.hasErrors()) {
             //Set model to retrieve data entered
             model.addAttribute("superhero", superhero);
@@ -113,11 +114,11 @@ public class SuperheroController {
         Superhero superhero = superheroService.getSuperheroById(id);
         byte[] superheroImage = superhero.getImage();
         String superheroImageData = null;
-        if(superheroImage != null) {
+        if (superheroImage != null) {
             superheroImageData = Base64.getMimeEncoder().encodeToString(superheroImage);
         }
         model.addAttribute("superhero", superhero);
-        model.addAttribute("superheroImage", superheroImageData);        
+        model.addAttribute("superheroImage", superheroImageData);
         return "superheroDetail";
     }
 
@@ -126,11 +127,11 @@ public class SuperheroController {
         Superhero superhero = superheroService.getSuperheroById(id);
         byte[] superheroImage = superhero.getImage();
         String superheroImageData = null;
-        if(superheroImage != null) {
+        if (superheroImage != null) {
             superheroImageData = Base64.getMimeEncoder().encodeToString(superheroImage);
         }
         model.addAttribute("superhero", superhero);
-        model.addAttribute("superheroImage", superheroImageData);        
+        model.addAttribute("superheroImage", superheroImageData);
         List<Superpower> superpowers = superpowerService.getAllSuperpowers();
         List<Organization> organizations = organizationService.getAllOrganizations();
         model.addAttribute("superhero", superhero);
@@ -140,7 +141,19 @@ public class SuperheroController {
     }
 
     @PostMapping("editSuperhero")
-    public String performEditSuperhero(@Valid Superhero superhero, BindingResult result, HttpServletRequest request, Model model) {
+    public String performEditSuperhero(@Valid Superhero superhero,
+            BindingResult result,
+            HttpServletRequest request,
+            @RequestParam("superheroSaveImage") MultipartFile file,
+            Model model) {
+
+        try {
+            superhero.setImage(file.getBytes());
+        } catch (IOException ex) {
+            FieldError error = new FieldError("superhero", "image", ex.getMessage());
+            result.addError(error);
+        }
+
         String superpowerId = request.getParameter("superpowerId");
 
         String[] organizationIds = request.getParameterValues("organizationId");
@@ -176,7 +189,7 @@ public class SuperheroController {
         model.addAttribute("id", id);
         return "deleteSuperhero";
     }
-    
+
     @PostMapping("/deleteSuperhero")
     public String deleteSuperhero(@RequestParam("id") int id) {
         superheroService.deleteSuperheroById(id);

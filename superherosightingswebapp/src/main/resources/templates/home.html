@@ -56,7 +56,6 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Date</th>
                                 <th>Location</th>
                                 <th>Superhero</th>
@@ -67,7 +66,6 @@
                         </thead>
                         <tbody>
                             <tr th:each="sighting : ${sightings}">
-                                <td th:text="${sighting.id}">ID</td>
                                 <td th:text="${sighting.date}">Date</td>
                                 <td th:text="${sighting.location.name}">Location</td>
                                 <td th:text="${sighting.superhero.name}">Superhero</td>

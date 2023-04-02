@@ -8,6 +8,7 @@ package com.lok.superherosightingswebapp.dto;
 
 import java.util.Objects;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class Organization {
@@ -27,7 +28,8 @@ public class Organization {
     private String address;
     
     @NotBlank(message = "Contact No. must not be empty")
-    @Size(min = 10, max = 10, message = "Contact No. must be exactly 10 characters")
+    @Size(min = 10, max = 10, message = "Contact No. must be exactly 10 digits")
+    @Pattern(regexp = "\\d+", message = "Contact No. must contain only digits")
     private String contactNumber;
 
     public int getId() {

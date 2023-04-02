@@ -59,12 +59,13 @@ public class SuperheroController {
 
     @PostMapping("addSuperhero")
     public String addSuperhero(@Valid @ModelAttribute("superhero") Superhero superhero,
-            BindingResult result,
-            HttpServletRequest request,
-            @RequestParam("superheroSaveImage") MultipartFile file,
-            Model model) {
+                                BindingResult result,
+                                HttpServletRequest request,
+                                @RequestParam("superheroSaveImage") MultipartFile file,
+                                Model model) {
         try {
             superhero.setImage(file.getBytes());
+            //If no file is sent, then file.getBytes().length returns 0 otherwise some positive number;
         } catch (IOException ex) {
             FieldError error = new FieldError("superhero", "image", ex.getMessage());
             result.addError(error);
@@ -142,10 +143,10 @@ public class SuperheroController {
 
     @PostMapping("editSuperhero")
     public String performEditSuperhero(@Valid Superhero superhero,
-            BindingResult result,
-            HttpServletRequest request,
-            @RequestParam("superheroSaveImage") MultipartFile file,
-            Model model) {
+                                        BindingResult result,
+                                        HttpServletRequest request,
+                                        @RequestParam("superheroSaveImage") MultipartFile file,
+                                        Model model) {
 
         try {
             superhero.setImage(file.getBytes());
@@ -153,7 +154,7 @@ public class SuperheroController {
             FieldError error = new FieldError("superhero", "image", ex.getMessage());
             result.addError(error);
         }
-
+        
         String superpowerId = request.getParameter("superpowerId");
 
         String[] organizationIds = request.getParameterValues("organizationId");

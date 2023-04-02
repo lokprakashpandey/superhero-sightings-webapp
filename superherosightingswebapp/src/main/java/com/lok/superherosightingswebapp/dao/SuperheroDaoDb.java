@@ -101,15 +101,26 @@ public class SuperheroDaoDb implements SuperheroDao {
     @Override
     @Transactional
     public void updateSuperhero(Superhero superhero) {
-        final String UPDATE_SUPERHERO = "UPDATE superhero SET name = ?, description = ?, "
-                + "image = ?, superpowerId = ? WHERE id = ?";
-        jdbc.update(UPDATE_SUPERHERO,
-                superhero.getName(),
-                superhero.getDescription(),
-                superhero.getImage(),
-                superhero.getSuperpower().getId(),
-                superhero.getId());
-
+        //save superhero with image
+        if(superhero.getImage().length > 0) {
+            final String UPDATE_SUPERHERO = "UPDATE superhero SET name = ?, description = ?, "
+                    + "image = ?, superpowerId = ? WHERE id = ?";
+            jdbc.update(UPDATE_SUPERHERO,
+                    superhero.getName(),
+                    superhero.getDescription(),
+                    superhero.getImage(),
+                    superhero.getSuperpower().getId(),
+                    superhero.getId());
+        }
+        else {
+            final String UPDATE_SUPERHERO = "UPDATE superhero SET name = ?, description = ?, "
+                    + "superpowerId = ? WHERE id = ?";
+            jdbc.update(UPDATE_SUPERHERO,
+                    superhero.getName(),
+                    superhero.getDescription(),
+                    superhero.getSuperpower().getId(),
+                    superhero.getId());
+        }
         //Since the updated Superhero object may have a List of different Organizations, so
         //we delete the previous superhero_organization entries and insert new entries
         final String DELETE_SUPERHERO_ORGANIZATION = "DELETE FROM superhero_organization WHERE superheroId = ?";
